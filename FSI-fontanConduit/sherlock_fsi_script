@@ -1,0 +1,35 @@
+#!/bin/bash
+# Name of your job
+#SBATCH --job-name=svFSI_test
+
+#SBATCH --partition=amarsden
+#SBATCH --output=test.o%j
+
+#SBATCH --error=test.e%j
+
+#SBATCH --time=30:00:00
+
+#SBATCH --qos=normal
+
+#SBATCH --nodes=1
+
+#SBATCH --mem=8000
+
+#SBATCH --ntasks-per-node=24
+
+#SBATCH --mail-user=zinanhu@stanford.edu
+#SBATCH --mail-type=begin
+#SBATCH --mail-type=end
+
+# Load Modules
+
+module --force purge
+module load system
+module load devel
+module load math
+module load impi/2018
+module load imkl/2019
+module load gcc
+#module load openmpi
+
+srun /home/users/zinanhu/svFSI_lpn/build/svFSI-build/bin/svFSI svFSI_FSI.inp
